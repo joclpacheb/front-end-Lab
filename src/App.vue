@@ -28,17 +28,35 @@ export default {
           {
             to: '/',
             icon: 'desktop-mac',
-            label: 'Dashboard'
+            label: 'Inicio',
+            updateMark: true
           }
         ],
-        'Examples',
+        'Acciones',
         [
           {
-            to: '/tables',
-            label: 'Tables',
-            icon: 'table',
-            updateMark: true
+            to: '/login',
+            label: 'Login-TMP',
+            icon: 'table'
           },
+          {
+            to: '/actas',
+            label: 'Actas',
+            icon: 'square-edit-outline'
+          },
+          {
+            to: '/usuarios',
+            label: 'Usuarios',
+            icon: 'account-box-multiple'
+          },
+          {
+            to: '/decanatos',
+            label: 'Decanatos',
+            icon: 'book-open-variant'
+          }
+        ],
+        'De la plantila:',
+        [
           {
             to: '/forms',
             label: 'Forms',
@@ -63,18 +81,13 @@ export default {
                 label: 'Sub-item Two'
               }
             ]
-          }
-        ],
-        'About',
+          }],
+        'Acerca de...',
         [
-          {
-            href: 'https://admin-one.justboil.me',
-            label: 'Premium Demo',
-            icon: 'credit-card'
-          },
+
           {
             href: 'https://justboil.me/bulma-admin-template/one',
-            label: 'About',
+            label: '¿Cyberpunk?',
             icon: 'help-circle'
           }
         ]

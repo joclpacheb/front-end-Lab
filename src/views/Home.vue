@@ -2,7 +2,7 @@
   <div>
     <title-bar :title-stack='titleStack' />
     <hero-bar :has-right-visible='false'>
-        <b>Inicio</b>  &mdash;  ¿Qué Harás Hoy?
+    ¿Qué Harás Hoy?
   <p class="buttons mr-4">
   <button class="button is-warning mt-3 mr-3">
     <span class="icon">
@@ -36,9 +36,9 @@
         />
           <card-widget
           class='tile is-child mt-3'
-          type='is-info'
+          type='is-primary'
           icon='account-box-multiple'
-          :number='8'
+          :number='20'
           label='Usuario Registrados'
         />
       </div>
@@ -81,14 +81,14 @@ export default {
   },
   computed: {
     titleStack () {
-      return ['Admin', 'Dashboard']
+      return ['Inicio']
     }
   },
   mounted () {
     this.fillChartData()
 
     this.$buefy.snackbar.open({
-      message: 'Estamos felices de que estés de vuelta',
+      message: '¡Estamos felices de que estés de vuelta!',
       queue: false
     })
   },
