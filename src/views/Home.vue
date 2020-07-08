@@ -11,10 +11,28 @@
     <span>Crear un Acta</span>
   </button>
   <button class="button is-success mt-3 mx-3">
-    <span class="icon is-small">
+    <span class="icon">
       <i class="far fa-compass fa-spin fa-pulse"></i>
     </span>
     <span>Consultar Actas</span>
+  </button>
+    <button class="button is-info mt-3 mx-3">
+    <span class="icon">
+      <i class="fas fa-atom fa-spin fa-pulse"></i>
+    </span>
+    <span>Reporte de Actas</span>
+  </button>
+   <button class="button is-warning mt-3 mx-3">
+    <span class="icon">
+      <i class="fas fa-sun fa-spin fa-pulse"></i>
+    </span>
+    <span>Decanatos</span>
+  </button>
+   <button class="button is-success mt-3 mx-3">
+    <span class="icon">
+      <i class="fas fa-stroopwafel fa-spin fa-pulse"></i>
+    </span>
+    <span>Usuarios</span>
   </button>
 </p></hero-bar>
     <section class='section is-main-section'>
