@@ -5,15 +5,14 @@
         <div class="level-left">
           <div class="level-item">
             <div class="footer-copyright">
-              <b>&copy; {{ year }}, JustBoil.me</b> &mdash; Admin One Demo <span class="tag">v1.4.1</span>
+              <b>&copy; {{ year }}, Equipo Cyberpunk</b> &mdash; Proyecto de Laboratorio II
             </div>
           </div>
         </div>
         <div class="level-right">
           <div class="level-item">
             <div class="logo">
-              <a href="https://justboil.me">
-                <img src="../assets/justboil-logo.svg" alt="JustBoil.me"/>
+                <img src="../assets/UCLA.jpg" alt="UCLA"/>
               </a>
             </div>
           </div>
