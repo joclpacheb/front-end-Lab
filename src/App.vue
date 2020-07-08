@@ -40,9 +40,22 @@ export default {
             icon: 'table'
           },
           {
-            to: '/actas',
             label: 'Actas',
-            icon: 'square-edit-outline'
+            icon: 'square-edit-outline',
+            menu: [
+              {
+                to: '/actas/create',
+                label: 'Crear Acta'
+              },
+              {
+                to: '/actas/list',
+                label: 'Consultar Actas'
+              },
+              {
+                to: '/actas/report',
+                label: 'Reporte de Actas'
+              }
+            ]
           },
           {
             to: '/usuarios',

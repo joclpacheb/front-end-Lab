@@ -38,6 +38,51 @@ const routes = [
   },
   {
     meta: {
+      title: 'Usuarios'
+    },
+    path: '/usuarios',
+    name: 'usuarios',
+    component: () =>
+      import(/* webpackChunkName: 'tables' */ '../views/Usuarios.vue')
+  },
+  {
+    meta: {
+      title: 'Decanatos'
+    },
+    path: '/decanatos',
+    name: 'decanatos',
+    component: () =>
+      import(/* webpackChunkName: 'tables' */ '../views/Decanatos.vue')
+  },
+  {
+    meta: {
+      title: 'Actas'
+    },
+    path: '/actas',
+    name: 'actas',
+    children: [
+      {
+        path: '/create',
+        name: 'createActas',
+        component: () =>
+          import(/* webpackChunkName: 'tables' */ '../views/Actas/Create.vue')
+      },
+      {
+        path: '/list',
+        name: 'listActas',
+        component: () =>
+          import(/* webpackChunkName: 'tables' */ '../views/Actas/List.vue')
+      },
+      {
+        path: '/report',
+        name: 'reportActas',
+        component: () =>
+          import(/* webpackChunkName: 'tables' */ '../views/Actas/Report.vue')
+      }
+    ]
+  },
+  {
+    meta: {
       title: 'Forms'
     },
     path: '/forms',
