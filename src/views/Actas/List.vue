@@ -42,7 +42,8 @@
                           <td>DCYT</td>
                           <td>
                               <a class="button is-small is-info mr-3" @click="modal = true">Editar</a>
-                              <a class="button is-small is-danger" @click="deleteA">Eliminar</a>
+                              <a class="button is-small is-danger mr-3" @click="deleteA">Eliminar</a>
+                              <a class="button is-small is-warning mr-3" @click="download">Descargar PDF</a>
                           </td>
                         </tr>
                         <tr>
@@ -53,7 +54,8 @@
                             <td>DEHA</td>
                             <td>
                                 <a class="button is-small is-info mr-3" @click="modal = true">Editar</a>
-                                <a class="button is-small is-danger" @click="deleteA">Eliminar</a>
+                                <a class="button is-small is-danger mr-3" @click="deleteA">Eliminar</a>
+                                <a class="button is-small is-warning mr-3" @click="download">Descargar PDF</a>
                             </td>
                         </tr>
                       </tbody>

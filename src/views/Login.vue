@@ -23,20 +23,83 @@
                 password-reveal
               ></b-input>
             </b-field>
-            <b-field>
+            <!-- <b-field>
               <a
                 class="password-remind-link has-text-dark is-fullwidth"
                 @click="passwordReminder()"
               >Olvidé mi contraseña...</a>
-            </b-field>
+            </b-field> -->
             <button class="button is-primary is-large is-fullwidth" @click="doLogin()">Entrar al Sistema</button>
           </div>
           <div class="has-text-centered">
-            <router-link to="/register">¡Me quiero Registrar!</router-link>
+            <button class="button is-info is-large is-fullwidth is-outlined"  @click="modal=true">¡Me quiero Registrar! </button>
           </div>
         </div>
       </div>
     </div>
+    <b-modal :active.sync="modal" has-modal-card>
+      <form action="">
+            <div class="modal-card" style="width: auto">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Crear Usuario</p>
+                </header>
+                <section class="modal-card-body">
+                <form @submit.prevent="submit">
+          <b-field label="Datos de Ingreso" horizontal>
+            <b-field>
+              <b-input icon="account-box-outline" v-model="form2.id" placeholder="Cédula" name="Cédula" required />
+            </b-field>
+            <b-field>
+              <b-input icon="email" type="email" v-model="form2.email" placeholder="E-mail" name="E-mail"/>
+            </b-field>
+          </b-field>
+          <b-field label="Nombres" horizontal>
+          <b-field>
+              <b-input icon="account" v-model="form2.name" placeholder="Nombre" name="Nombre" required />
+            </b-field>
+             <b-field>
+              <b-input icon="account" v-model="form2.secondname" placeholder="Apellido" name="Apellido" required />
+            </b-field>
+          </b-field>
+          <b-field label="Teléfono" message="Ejemplo: 0424-4345062" horizontal>
+            <b-field>
+              <p class="control">
+                <a class="button is-static">
+                  +58
+                </a>
+              </p>
+              <b-input type="tel" v-model="form2.phone" name="phone" expanded />
+            </b-field>
+          </b-field>
+          <b-field label="Decanato" horizontal>
+            <b-select placeholder="Seleccione un Decanato" v-model="form2.faculty" required>
+              <option v-for="(decanato, index) in decanatos" :key="index" :value="decanato">
+                {{ decanato }}
+              </option>
+            </b-select>
+            </b-field>
+            <b-field label="Tipo de Usuario" horizontal>
+            <b-select placeholder="Seleccione una opción" rounded required icon="account"  v-model="form2.type">
+                <option value="flint">Administrador</option>
+                <option value="silver">Secretario</option>
+            </b-select>
+          </b-field>
+          <b-field horizontal label="Contraseña" message="Será utilizada por el usuario para Iniciar Sesión">
+        <b-input name="password" type="password" v-model="form2.password" required autocomplete="new-password"/>
+      </b-field>
+      <b-field horizontal label="Confirmar Contraseña" message="Escriba la Contraseña otra vez">
+        <b-input name="password_confirmation" type="password" v-model="form2.password_confirmation" required
+                 autocomplete="new-password"/>
+      </b-field>
+        </form>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-primary" type="button" @click="modal=false">Cerrar</button>
+                    <button class="button is-info"  @click="edit">Registrar Usuario</button>
+                </footer>
+            </div>
+        </form>
+    </b-modal>
   </div>
 </template>
 
@@ -46,7 +109,19 @@ export default {
   data () {
     return {
       mail: '',
-      password: ''
+      password: '',
+      modal: false,
+      form2: {
+        id: null,
+        name: null,
+        secondname: null,
+        faculty: null,
+        type: null,
+        phone: null,
+        email: null,
+        password: null,
+        password_confirmation: null
+      }
     }
   },
 
