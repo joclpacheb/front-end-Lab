@@ -27,13 +27,13 @@ export default {
   },
   computed: {
     buttonLabel () {
-      return !this.file ? 'Pick a file' : 'Pick another file'
+      return !this.file ? 'Seleccione un Archivo' : 'Seleccione otro archivo'
     }
   },
   methods: {
     upload (file) {
       this.$emit('input', file)
-      // Use this as an example for handling file uploads
+      // VEAN ESTO COMO EJEMPLO PARA SUBIR ARCHIVOS OJO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       // let formData = new FormData()
       // formData.append('file', file)
 

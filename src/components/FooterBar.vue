@@ -13,7 +13,6 @@
           <div class="level-item">
             <div class="logo">
                 <img src="../assets/UCLA.jpg" alt="UCLA"/>
-              </a>
             </div>
           </div>
         </div>
