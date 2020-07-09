@@ -68,38 +68,38 @@ export default {
             icon: 'book-open-variant'
           }
         ],
-        'De la plantila:',
-        [
-          {
-            to: '/forms',
-            label: 'Forms',
-            icon: 'square-edit-outline'
-          },
-          {
-            to: '/profile',
-            label: 'Profile',
-            icon: 'account-circle'
-          },
-          {
-            label: 'Submenus',
-            subLabel: 'Submenus Example',
-            icon: 'view-list',
-            menu: [
-              {
-                href: '#void',
-                label: 'Sub-item One'
-              },
-              {
-                href: '#void',
-                label: 'Sub-item Two'
-              }
-            ]
-          }],
+        // 'De la plantila:',
+        // [
+        //   {
+        //     to: '/forms',
+        //     label: 'Forms',
+        //     icon: 'square-edit-outline'
+        //   },
+        //   {
+        //     to: '/profile',
+        //     label: 'Profile',
+        //     icon: 'account-circle'
+        //   },
+        //   {
+        //     label: 'Submenus',
+        //     subLabel: 'Submenus Example',
+        //     icon: 'view-list',
+        //     menu: [
+        //       {
+        //         href: '#void',
+        //         label: 'Sub-item One'
+        //       },
+        //       {
+        //         href: '#void',
+        //         label: 'Sub-item Two'
+        //       }
+        //     ]
+        //   }],
         'Acerca de...',
         [
 
           {
-            href: 'https://justboil.me/bulma-admin-template/one',
+            href: '/about',
             label: '¿Cyberpunk?',
             icon: 'help-circle'
           }
@@ -109,8 +109,8 @@ export default {
   },
   created () {
     this.$store.commit('user', {
-      name: 'John Doe',
-      email: 'john@example.com',
+      name: 'Nombre',
+      email: 'Correo@example.com',
       avatar: 'https://avatars.dicebear.com/v2/gridy/John-Doe.svg'
     })
   }

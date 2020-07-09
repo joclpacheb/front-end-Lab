@@ -2,24 +2,20 @@
   <div>
     <title-bar :title-stack="titleStack"/>
     <hero-bar>
-      Profile
+      Mi Perfil
       <router-link slot="right" to="/" class="button">
-        Dashboard
+        Inicio
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
       <tiles>
         <profile-update-form class="tile is-child"/>
-        <card-component title="Profile" icon="account" class="tile is-child">
-          <user-avatar class="image has-max-width is-aligned-center"/>
-          <hr>
-          <b-field label="Name">
-            <b-input :value="userName" custom-class="is-static" readonly/>
-          </b-field>
-          <hr>
-          <b-field label="E-mail">
-            <b-input :value="userEmail" custom-class="is-static" readonly/>
-          </b-field>
+        <card-component title="Aquí puedes Editar tu Perfil facilmente" icon="account" class="tile is-child">
+        <div class='card-image mt-8'>
+        <figure class='image has-max-width mt-8'>
+          <img src='../assets/wfh_3.svg' alt='Placeholder'/>
+        </figure>
+      </div>
         </card-component>
       </tiles>
       <password-update-form/>
@@ -35,15 +31,15 @@ import HeroBar from '@/components/HeroBar'
 import ProfileUpdateForm from '@/components/ProfileUpdateForm'
 import PasswordUpdateForm from '@/components/PasswordUpdateForm'
 import Tiles from '@/components/Tiles'
-import UserAvatar from '@/components/UserAvatar'
+
 export default {
   name: 'Profile',
-  components: { UserAvatar, Tiles, PasswordUpdateForm, ProfileUpdateForm, HeroBar, TitleBar, CardComponent },
+  components: { Tiles, PasswordUpdateForm, ProfileUpdateForm, HeroBar, TitleBar, CardComponent },
   computed: {
     titleStack () {
       return [
-        'Admin',
-        'Profile'
+        'Mi Perfil',
+        'Editar'
       ]
     },
     ...mapState([

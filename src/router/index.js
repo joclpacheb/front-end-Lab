@@ -101,6 +101,15 @@ const routes = [
   },
   {
     meta: {
+      title: 'About'
+    },
+    path: '/about',
+    name: 'about',
+    component: () =>
+      import(/* webpackChunkName: 'profile' */ '../views/About.vue')
+  },
+  {
+    meta: {
       title: 'New Client'
     },
     path: '/client/new',

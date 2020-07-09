@@ -22,7 +22,7 @@
                 <option value="1">Ordinaria</option>
                 <option value="2">Extraordinaria</option>
             </b-select>
-        </b-field>
+          </b-field>
           <hr>
            <b-field label="Descripción" message="Describa el Acta según el Consejo y el Tipo de Sesión" horizontal>
             <b-input type="textarea" placeholder="Detalle aquí los datos del Acta..." v-model="form.descripcion" maxlength="255"/>
@@ -33,7 +33,7 @@
             placeholder="Clickee para seleccionar..."
             v-model="form.fecha"
              >
-        </b-datepicker>
+          </b-datepicker>
              </b-field>
              <hr>
           <b-field label="Decanato" horizontal>
@@ -113,7 +113,7 @@ export default {
     this.fetchActiveDecanatos()
   },
   methods: {
-    ...mapActions('decanatos', ['fetchActiveDecanatos']),
+    ...mapActions(['decanatos'], ['fetchActiveDecanatos']),
     ...mapActions('actas', ['createActa']),
     async submit () {
       console.log(this.form)
@@ -159,7 +159,7 @@ export default {
         message: '¡Campos Limpiados!',
         queue: false
       })
-    },
+    }
   }
 }
 </script>

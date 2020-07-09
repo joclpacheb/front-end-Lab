@@ -62,7 +62,7 @@
 
       <div class="column">
       <div class='card-image'>
-        <figure class='image is-4by3'>
+        <figure class='image'>
           <img src='../assets/wfh_5.svg' alt='Placeholder'/>
         </figure>
       </div>
