@@ -41,21 +41,21 @@
           class='tile is-child mb-3'
           type='is-primary'
           icon='note-text'
-          :number='512'
+          :number='contdores.actas'
           label='Actas Registradas'
         />
         <card-widget
           class='tile is-child mt-3'
           type='is-info'
           icon='book-open-variant'
-          :number='8'
+          :number='contdores.decanatos'
           label='Decanatos Registrados'
         />
           <card-widget
           class='tile is-child mt-3'
           type='is-primary'
           icon='account-box-multiple'
-          :number='20'
+          :number='contdores.usuarios'
           label='Usuario Registrados'
         />
       </div>
@@ -78,6 +78,7 @@
 // @ is an alias to /src
 import HeroBar from '@/components/HeroBar'
 import CardWidget from '@/components/CardWidget'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'home',
@@ -92,15 +93,18 @@ export default {
     }
   },
   computed: {
-
+    ...mapGetters('actas', ['contdores'])
   },
   mounted () {
     this.$buefy.snackbar.open({
       message: '¡Estamos felices de que estés de vuelta!',
       queue: false
     })
+    this.fetchContadores()
+    console.log(this.contdores)
   },
   methods: {
+    ...mapActions('actas', ['fetchContadores']),
     listA () {
       this.$router.push('/actas/list')
     },

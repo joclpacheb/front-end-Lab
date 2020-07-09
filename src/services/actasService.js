@@ -18,5 +18,8 @@ export default {
   },
   deleteActa (codigo) {
     return api.delete(`/acta/${codigo}`)
+  },
+  getContador () {
+    return api.get('/dash/contadores')
   }
 }

@@ -11,6 +11,11 @@ const state = {
     fecha: '',
     ult_actializacion: '',
     decanato: null
+  },
+  contadores: {
+    actas: '',
+    decanatos: '',
+    usuarios: ''
   }
 }
 
@@ -23,6 +28,9 @@ const mutations = {
   },
   SET_ACTA (state, acta) {
     state.acta = acta
+  },
+  SET_CONTADORES (state, contadores) {
+    state.contadores = contadores
   },
   UPDATE_ACTA (state, payload) {
     state.actas = state.actas.map((acta) => {
@@ -39,7 +47,7 @@ const mutations = {
     state.acta.fecha = data.fecha
     state.acta.ult_actializacion = data.ult_actializacion
   },
-  [types.ADD_ARTIFACT_DATA] (state, data) {
+  [types.ADD_ACTAS_DATA] (state, data) {
     switch (data.key) {
       case 'description':
         state.acta.descripcion = data.value
@@ -156,6 +164,16 @@ const actions = {
       .catch((error) => {
         console.log(error)
       })
+  },
+  fetchContadores ({ commit }) {
+    actasService.getContador()
+      .then((response) => {
+        console.log(response.data)
+        commit('SET_CONTADORES', response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 }
 const getters = {
@@ -165,7 +183,8 @@ const getters = {
   actas: (state) => {
     return state.actas
   },
-  acta: (state) => state.acta
+  acta: (state) => state.acta,
+  contadores: (state) => state.contadores
 }
 
 export default {

@@ -100,7 +100,7 @@
                 </section>
                 <footer class="modal-card-foot">
                     <button class="button is-primary" type="button" @click="modal=false">Cerrar</button>
-                    <button class="button is-info"  @click="edit()">Editar Acta</button>
+                    <button class="button is-info"  @click="edit">Editar Acta</button>
                 </footer>
             </div>
         </form>
@@ -161,6 +161,8 @@ export default {
     // this.fetchActas()
   },
   methods: {
+    download () {
+    },
     ...mapActions('actas', ['fetchActiveActas', 'deleteActa', 'fetchActas']),
 
     edit () {
