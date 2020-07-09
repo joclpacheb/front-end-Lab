@@ -4,6 +4,21 @@ import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
+/*
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/login', '/register', '/home']
+  const authRequired = !publicPages.includes(to.path)
+  const loggedIn = localStorage.getItem('user')
+
+  // trying to access a restricted page + not logged in
+  // redirect to login page
+  if (authRequired && !loggedIn) {
+    next('/login')
+  } else {
+    next()
+  }
+}) */
+
 const routes = [
   {
     // Document title tag
@@ -89,6 +104,15 @@ const routes = [
     name: 'forms',
     component: () =>
       import(/* webpackChunkName: 'forms' */ '../views/Forms.vue')
+  },
+  {
+    meta: {
+      title: 'Signin'
+    },
+    path: '/signin',
+    name: 'signin',
+    component: () =>
+      import(/* webpackChunkName: 'forms' */ '../views/Signin.vue')
   },
   {
     meta: {

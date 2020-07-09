@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import actas from './modules/actas'
 import decanatos from './modules/decanatos'
+import { auth } from './modules/auth.module'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -61,11 +63,10 @@ export default new Vuex.Store({
       state.isAsideMobileExpanded = isShow
     }
   },
-  actions: {
-
-  },
+  actions: {},
   modules: {
     actas,
-    decanatos
+    decanatos,
+    auth
   }
 })

@@ -113,7 +113,7 @@ export default {
       modal: false,
       form2: {
         id: null,
-        name: null,
+        name: '',
         secondname: null,
         faculty: null,
         type: null,
