@@ -112,7 +112,7 @@
                 </section>
                 <footer class="modal-card-foot">
                     <button class="button is-primary" type="button" @click="modal=false">Cerrar</button>
-                    <button class="button is-info"  @click="edit()">Editar Acta</button>
+                    <button class="button is-info"  @click="edit">Editar Acta</button>
                 </footer>
             </div>
         </form>
@@ -133,7 +133,6 @@ export default {
   },
   data () {
     const today = new Date()
-
     return {
       date: new Date(),
       modal: false,
@@ -173,6 +172,9 @@ export default {
         message: '¡Se modificó el Acta exitosamente!',
         queue: false
       })
+    },
+    download () {
+
     },
     deleteA () {
       this.$buefy.dialog.confirm({
