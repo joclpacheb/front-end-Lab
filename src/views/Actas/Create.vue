@@ -19,8 +19,8 @@
         <form @submit.prevent="submit">
           <b-field label="Tipo de Sesión" horizontal>
             <b-select placeholder="Seleccione una opción" rounded required icon="account"  v-model="form.tipo">
-                <option value="flint">Ordinaria</option>
-                <option value="silver">Extraordinaria</option>
+                <option value="1">Ordinaria</option>
+                <option value="2">Extraordinaria</option>
             </b-select>
         </b-field>
           <hr>
@@ -38,15 +38,15 @@
              <hr>
           <b-field label="Decanato" horizontal>
             <b-select placeholder="Seleccione un Decanato" v-model="form.decanato" required>
-              <option v-for="(decanato, index) in decanatos" :key="index" :value="decanato">
-                {{ decanato }}
+              <option v-for="decanato in decanatos" :key="decanato.codigo" :value="decanato">
+                {{ decanato.nombre }}
               </option>
             </b-select>
           </b-field>
 
           <hr>
           <b-field label="Adjunte el PDF del Acta Original" horizontal>
-          <file-picker v-model="customElementsForm.file" class="my-2"/>
+          <file-picker v-model="form.pdf" type="file" class="my-2" id="file" ref="file" />
         </b-field>
           <b-field horizontal>
             <b-field grouped>
@@ -68,11 +68,14 @@
 </template>
 
 <script>
-
+/* eslint-disable */
 import HeroBar from '@/components/HeroBar'
 import CardComponent from '@/components/CardComponent'
 import FilePicker from '@/components/FilePicker'
 import mapValues from 'lodash/mapValues'
+import { mapGetters, mapActions } from 'vuex'
+import axios from 'axios'
+import Cookies from 'js-cookie'
 
 export default {
   name: 'Forms',
@@ -84,38 +87,62 @@ export default {
     return {
       date: new Date(),
       minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
-      decanatos: [
-        'DCYT',
-        'DEHA',
-        'DCEE',
-        'DCV',
-        'DA',
-        'DIC',
-        'DCS'
-      ],
       customElementsForm: {
         file: null
       },
       form: {
         tipo: null,
         descripcion: null,
-        decanato: null,
-        fecha: today
+        decanato: 1,
+        fecha: today,
+        estatus: 'A',
+        ult_actializacion: today,
+        pdf: ''
       }
 
     }
   },
   computed: {
-
+    ...mapGetters('decanatos', ['decanatos'])
   },
   mounted () {
     this.$buefy.snackbar.open({
       message: '¡Aquí podrás registrar Actas de Consejo!',
       queue: false
     })
+    this.fetchActiveDecanatos()
   },
   methods: {
-    submit () {
+    ...mapActions('decanatos', ['fetchActiveDecanatos']),
+    ...mapActions('actas', ['createActa']),
+    async submit () {
+      console.log(this.form)
+      let formData = new FormData();
+      formData.append('file', this.form.pdf)
+      console.log(formData)
+      axios.post( '/api/acta/', formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-CSRFToken': Cookies.get('csrftoken')
+          },
+        },
+      ).then(function(response){
+        console.log(response);
+      })
+        .catch(function(error){
+          console.log(error);
+        });
+      await this.createActa(
+        {
+          tipo: this.form.tipo,
+          descripcion: this.form.descripcion,
+          decanato: this.form.decanato,
+          fecha: this.form.fecha,
+          estatus: this.form.estatus,
+          ult_actializacion: this.form.ult_actializacion
+        }
+      )
       this.$buefy.snackbar.open({
         message: '¡Se registró el Acta exitosamente!',
         queue: false
@@ -132,7 +159,7 @@ export default {
         message: '¡Campos Limpiados!',
         queue: false
       })
-    }
+    },
   }
 }
 </script>

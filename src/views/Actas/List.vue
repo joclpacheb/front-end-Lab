@@ -34,27 +34,16 @@
                           </tr>
                         </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Ordinario</td>
-                          <td>Con quórum</td>
-                          <td>05/10/20</td>
-                          <td>DCYT</td>
+                        <tr v-for="acta in actas" :key="acta.codigo">
+                          <td>{{acta.codigo}}</td>
+                          <td>{{acta.tipo}}</td>
+                          <td>{{acta.descripcion}}</td>
+                          <td>{{acta.fecha}}</td>
+                          <td>{{acta.decanato.nombre}}</td>
                           <td>
                               <a class="button is-small is-info mr-3">Editar</a>
-                              <a class="button is-small is-danger">Eliminar</a>
+                              <a class="button is-small is-danger " @click="deleteItem(acta)">Eliminar</a>
                           </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Extraordinario</td>
-                            <td>Sesión Permanente</td>
-                            <td>04/01/</td>
-                            <td>DEHA</td>
-                            <td>
-                                <a class="button is-small is-info mr-3">Editar</a>
-                                <a class="button is-small is-danger">Eliminar</a>
-                            </td>
                         </tr>
                       </tbody>
                     </table>
@@ -68,6 +57,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 // @ is an alias to /src
 
 import HeroBar from '@/components/HeroBar'
@@ -78,18 +68,27 @@ export default {
   },
   data () {
     return {
+      decanato: ['DCYT', 'DEHA', 'DCEE', 'DCV', 'DA', 'DIC', 'DCS']
     }
   },
   computed: {
-
+    ...mapGetters('actas', ['actas'])
   },
   mounted () {
     this.$buefy.snackbar.open({
       message: '¡Aquí podrás consultar todas las Actas de Consejo!',
       queue: false
     })
+    this.fetchActiveActas()
+    // this.fetchActas()
   },
   methods: {
+    ...mapActions('actas', ['fetchActiveActas', 'deleteActa', 'fetchActas']),
+
+    async deleteItem (item) {
+      await this.deleteActa(item.codigo)
+      this.fetchActas()
+    }
   }
 }
 </script>

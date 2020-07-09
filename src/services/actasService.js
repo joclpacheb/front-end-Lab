@@ -4,11 +4,11 @@ export default {
   getActas () {
     return api.get('/acta/')
   },
+  getActiveActas () {
+    return api.get('/acta/activos')
+  },
   createActa (acta) {
     return api.post('/acta/', acta)
-  },
-  getActasActivas () {
-    return api.get('/acta/activos/')
   },
   getActa (id) {
     return api.get(`/acta/${id}`)
@@ -16,7 +16,7 @@ export default {
   updateActa (id, acta) {
     return api.put(`/acta/${id}`, acta)
   },
-  deleteActa (id) {
-    return api.delete(`/acta/${id}`)
+  deleteActa (codigo) {
+    return api.delete(`/acta/${codigo}`)
   }
 }

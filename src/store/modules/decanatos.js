@@ -1,63 +1,55 @@
-import actasService from '@/services/actasService.js'
+import decanatosService from '@/services/decanatosService'
 import * as types from '@/store/mutation-types'
 
 const state = {
-  actas: [],
-  acta: {
+  decanatos: [],
+  decanato: {
     codigo: '',
-    tipo: '',
-    descripcion: '',
-    estatus: '',
-    fecha: '',
-    ult_actializacion: '',
-    decanato: null
+    nombre: '',
+    direccion: '',
+    telefono: '',
+    estatus: ''
   }
 }
 
 const mutations = {
-  ADD_ACTA (state, acta) {
-    state.actas.push(acta)
+  ADD_DECANATO (state, decanato) {
+    state.decanatos.push(decanato)
   },
-  SET_ACTAS (state, actas) {
-    state.actas = actas
+  SET_DECANATOS (state, decanatos) {
+    state.decanatos = decanatos
   },
-  SET_ACTA (state, acta) {
-    state.acta = acta
+  SET_ACTA (state, decanato) {
+    state.decanato = decanato
   },
   UPDATE_ACTA (state, payload) {
-    state.actas = state.actas.map((acta) => {
-      if (acta.codigo === payload.codigo) {
-        return Object.assign({}, acta, payload.data)
+    state.decanatos = state.decanatos.map((decanato) => {
+      if (decanato.codigo === payload.codigo) {
+        return Object.assign({}, decanato, payload.data)
       }
-      return acta
+      return decanato
     })
   },
 
   [types.FILL_ACTA] (state, data) {
-    state.acta.descripcion = data.descripcion
-    state.acta.tipo = data.tipo
-    state.acta.fecha = data.fecha
-    state.acta.ult_actializacion = data.ult_actializacion
+    state.decanato.descripcion = data.descripcion
+    state.decanato.tipo = data.tipo
+    state.decanato.fecha = data.fecha
+    state.decanato.ult_actializacion = data.ult_actializacion
   },
-  [types.ADD_ARTIFACT_DATA] (state, data) {
+  [types.ADD_DECANATO_DATA] (state, data) {
     switch (data.key) {
-      case 'description':
-        state.acta.descripcion = data.value
+      case 'nombre':
+        state.decanato.nombre = data.value
         break
-      case 'tipo':
-        state.acta.tipo = data.value
+      case 'direccion':
+        state.decanato.direccion = data.value
         break
-      case 'fecha':
-        state.acta.fecha = data.value
-        break
-      case 'ult_actializacion':
-        state.acta.ult_actializacion = data.value
-        break
-      case 'decanato':
-        state.acta.decanato = data.value
+      case 'telefono':
+        state.decanato.telefono = data.value
         break
       case 'estatus':
-        state.acta.estatus = data.value
+        state.decanato.estatus = data.value
         break
       default:
         break
@@ -66,32 +58,32 @@ const mutations = {
 }
 
 const actions = {
-  createActa ({ commit }, acta) {
-    return actasService
-      .createActa(acta)
+  createDecanato ({ commit }, decanato) {
+    return decanatosService
+      .createDecanato(decanato)
       .then((response) => {
-        commit('ADD_ACTA', acta)
+        commit('ADD_DECANATO', decanato)
         console.log(response.data)
       })
       .catch((error) => {
         console.log(error)
       })
   },
-  fetchActas ({ commit }) {
-    actasService.getActas()
+  fetchDecanatos ({ commit }) {
+    decanatosService.getDecanatos()
       .then((response) => {
         console.log(response.data)
-        commit('SET_ACTAS', response.data)
+        commit('SET_DECANATOS', response.data)
       })
       .catch((error) => {
         console.log(error)
       })
   },
-  fetchActiveActas ({ commit }) {
-    actasService.getActiveActas()
+  fetchActiveDecanatos ({ commit }) {
+    decanatosService.getActiveDecanatos()
       .then((response) => {
         console.log(response.data)
-        commit('SET_ACTAS', response.data)
+        commit('SET_DECANATOS', response.data)
       })
       .catch((error) => {
         console.log(error)
@@ -145,9 +137,9 @@ const actions = {
     commit(types.ADD_RESOURCE_DATA, data)
   }, */
 
-  deleteActa ({ commit }, codigo) {
-    actasService
-      .deleteActa(codigo)
+  deleteDecanato ({ commit }, codigo) {
+    decanatosService
+      .deleteDecanato(codigo)
       .then((response) => {
         if (response.status === 200) {
           console.log('se elimino')
@@ -159,13 +151,13 @@ const actions = {
   }
 }
 const getters = {
-  getActaByCodigo: (state) => (codigo) => {
-    return state.actas.find((acta) => acta.codigo === codigo)
+  getDecanatoByCodigo: (state) => (codigo) => {
+    return state.decanatos.find((decanato) => decanato.codigo === codigo)
   },
-  actas: (state) => {
-    return state.actas
+  decanatos: (state) => {
+    return state.decanatos
   },
-  acta: (state) => state.acta
+  decanato: (state) => state.decanato
 }
 
 export default {

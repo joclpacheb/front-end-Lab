@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import actas from './modules/actas'
+import decanatos from './modules/decanatos'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -64,6 +65,7 @@ export default new Vuex.Store({
 
   },
   modules: {
-    actas
+    actas,
+    decanatos
   }
 })
