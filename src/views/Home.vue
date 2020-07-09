@@ -1,34 +1,33 @@
 <template>
   <div>
-    <title-bar :title-stack='titleStack' />
     <hero-bar :has-right-visible='false'>
     ¿Qué Harás Hoy?
   <p class="buttons mr-4">
-  <button class="button is-warning mt-3 mr-3">
+  <button class="button is-warning mt-3 mx-3"  @click="createA()">
     <span class="icon">
       <i class="fas fa-asterisk fa-spin fa-pulse"></i>
     </span>
     <span>Crear un Acta</span>
   </button>
-  <button class="button is-success mt-3 mx-3">
+  <button class="button is-success mt-3 mx-3" @click="listA()">
     <span class="icon">
-      <i class="far fa-compass fa-spin fa-pulse"></i>
+      <i class="far fa-compass fa-spin fa-pulse" ></i>
     </span>
     <span>Consultar Actas</span>
   </button>
-    <button class="button is-info mt-3 mx-3">
+    <button class="button is-info mt-3 mx-3"  @click="reportA()">
     <span class="icon">
       <i class="fas fa-atom fa-spin fa-pulse"></i>
     </span>
     <span>Reporte de Actas</span>
   </button>
-   <button class="button is-warning mt-3 mx-3">
+   <button class="button is-warning mt-3 mx-3" @click="listD()">
     <span class="icon">
       <i class="fas fa-sun fa-spin fa-pulse"></i>
     </span>
     <span>Decanatos</span>
   </button>
-   <button class="button is-success mt-3 mx-3">
+   <button class="button is-success mt-3 mx-3" @click="listU()">
     <span class="icon">
       <i class="fas fa-stroopwafel fa-spin fa-pulse"></i>
     </span>
@@ -75,9 +74,8 @@
 </template>
 
 <script>
+
 // @ is an alias to /src
-import * as chartConfig from '@/components/Charts/chart.config'
-import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import CardWidget from '@/components/CardWidget'
 
@@ -86,91 +84,37 @@ export default {
   components: {
 
     CardWidget,
-    HeroBar,
-    TitleBar
+    HeroBar
   },
   data () {
     return {
-      defaultChart: {
-        chartData: null,
-        extraOptions: chartConfig.chartOptionsMain
-      }
+
     }
   },
   computed: {
-    titleStack () {
-      return ['Inicio']
-    }
+
   },
   mounted () {
-    this.fillChartData()
-
     this.$buefy.snackbar.open({
       message: '¡Estamos felices de que estés de vuelta!',
       queue: false
     })
   },
   methods: {
-    randomChartData (n) {
-      const data = []
-
-      for (let i = 0; i < n; i++) {
-        data.push(Math.round(Math.random() * 200))
-      }
-
-      return data
+    listA () {
+      this.$router.push('/actas/list')
     },
-    fillChartData () {
-      this.defaultChart.chartData = {
-        datasets: [
-          {
-            fill: false,
-            borderColor: chartConfig.chartColors.default.primary,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: chartConfig.chartColors.default.primary,
-            pointBorderColor: 'rgba(255,255,255,0)',
-            pointHoverBackgroundColor: chartConfig.chartColors.default.primary,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.randomChartData(9)
-          },
-          {
-            fill: false,
-            borderColor: chartConfig.chartColors.default.info,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: chartConfig.chartColors.default.info,
-            pointBorderColor: 'rgba(255,255,255,0)',
-            pointHoverBackgroundColor: chartConfig.chartColors.default.info,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.randomChartData(9)
-          },
-          {
-            fill: false,
-            borderColor: chartConfig.chartColors.default.danger,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: chartConfig.chartColors.default.danger,
-            pointBorderColor: 'rgba(255,255,255,0)',
-            pointHoverBackgroundColor: chartConfig.chartColors.default.danger,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.randomChartData(9)
-          }
-        ],
-        labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09']
-      }
+    createA () {
+      this.$router.push('/actas/create')
+    },
+    reportA () {
+      this.$router.push('/actas/report')
+    },
+    listD () {
+      this.$router.push('/decanatos')
+    },
+    listU () {
+      this.$router.push('/usuarios')
     }
   }
 }

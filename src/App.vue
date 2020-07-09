@@ -44,7 +44,7 @@ export default {
             icon: 'square-edit-outline',
             menu: [
               {
-                to: '/actas/create',
+                href: '/actas/create',
                 label: 'Crear Acta'
               },
               {

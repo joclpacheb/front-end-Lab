@@ -56,30 +56,30 @@ const routes = [
   },
   {
     meta: {
-      title: 'Actas'
+      title: 'ActasCreate'
     },
-    path: '/actas',
-    name: 'actas',
-    children: [
-      {
-        path: '/create',
-        name: 'createActas',
-        component: () =>
-          import(/* webpackChunkName: 'tables' */ '../views/Actas/Create.vue')
-      },
-      {
-        path: '/list',
-        name: 'listActas',
-        component: () =>
-          import(/* webpackChunkName: 'tables' */ '../views/Actas/List.vue')
-      },
-      {
-        path: '/report',
-        name: 'reportActas',
-        component: () =>
-          import(/* webpackChunkName: 'tables' */ '../views/Actas/Report.vue')
-      }
-    ]
+    path: '/actas/create',
+    name: 'createActas',
+    component: () =>
+      import(/* webpackChunkName: 'tables' */ '../views/Actas/Create.vue')
+  },
+  {
+    meta: {
+      title: 'ActasList'
+    },
+    path: '/actas/list',
+    name: 'listActas',
+    component: () =>
+      import(/* webpackChunkName: 'tables' */ '../views/Actas/List.vue')
+  },
+  {
+    meta: {
+      title: 'ActasReport'
+    },
+    path: '/actas/report',
+    name: 'reportActas',
+    component: () =>
+      import(/* webpackChunkName: 'tables' */ '../views/Actas/Report.vue')
   },
   {
     meta: {
@@ -121,6 +121,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
   scrollBehavior (savedPosition) {
