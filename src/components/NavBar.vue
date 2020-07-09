@@ -24,7 +24,7 @@
           </div>
         </nav-bar-menu>
 
-        <a href="https://justboil.me/bulma-admin-template/one" class="navbar-item has-divider is-desktop-icon-only" title="Cyberpunk">
+        <a class="navbar-item has-divider is-desktop-icon-only" title="Cyberpunk" @click="about">
           <b-icon icon="help-circle-outline" custom-size="default"/>
           <span>Cyberpunk</span>
         </a>
@@ -73,9 +73,12 @@ export default {
     },
     logout () {
       this.$buefy.snackbar.open({
-        message: 'Log out clicked',
+        message: '¡Nos vemos!',
         queue: false
       })
+    },
+    about () {
+      this.$router.push('/about')
     }
   }
 }

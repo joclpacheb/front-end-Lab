@@ -22,7 +22,7 @@
                 <option value="flint">Ordinaria</option>
                 <option value="silver">Extraordinaria</option>
             </b-select>
-        </b-field>
+          </b-field>
           <hr>
            <b-field label="Descripción" message="Describa el Acta según el Consejo y el Tipo de Sesión" horizontal>
             <b-input type="textarea" placeholder="Detalle aquí los datos del Acta..." v-model="form.descripcion" maxlength="255"/>
@@ -33,7 +33,7 @@
             placeholder="Clickee para seleccionar..."
             v-model="form.fecha"
              >
-        </b-datepicker>
+          </b-datepicker>
              </b-field>
              <hr>
           <b-field label="Decanato" horizontal>
@@ -47,7 +47,7 @@
           <hr>
           <b-field label="Adjunte el PDF del Acta Original" horizontal>
           <file-picker v-model="customElementsForm.file" class="my-2"/>
-        </b-field>
+          </b-field>
           <b-field horizontal>
             <b-field grouped>
               <div class="control">
