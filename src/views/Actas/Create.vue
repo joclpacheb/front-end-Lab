@@ -76,6 +76,7 @@ import mapValues from 'lodash/mapValues'
 import { mapGetters, mapActions } from 'vuex'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import authHeader from '@/services/auth-header.js'
 
 export default {
   name: 'Forms',
@@ -116,16 +117,17 @@ export default {
     ...mapActions('decanatos', ['fetchActiveDecanatos']),
     ...mapActions('actas', ['createActa']),
     async submit () {
+      const user = JSON.parse(localStorage.getItem('user'))
+      const header ={ Authorization: 'Bearer ' + user.accessToken,
+        'Content-Type': 'multipart/form-data',
+        'X-CSRFToken': Cookies.get('csrftoken'),}
       console.log(this.form)
       let formData = new FormData();
       formData.append('file', this.form.pdf)
       console.log(formData)
       axios.post( '/api/pdf/uploadFile/', formData,
         {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'X-CSRFToken': Cookies.get('csrftoken')
-          },
+          headers: header
         },
       ).then(function(response){
         console.log(response);

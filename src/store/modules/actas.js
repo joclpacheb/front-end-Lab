@@ -133,7 +133,7 @@ const actions = {
   saveActa ({ commit }, payload) {
     console.log(payload)
     console.log('hi')
-    decanatosService
+    actasService
       .updateActa(payload.codigo, payload)
       .then((response) => {
         if (response.status === 200) {

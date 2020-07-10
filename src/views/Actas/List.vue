@@ -82,7 +82,7 @@
              <hr>
           <b-field label="Decanato" horizontal>
             <b-select placeholder="Seleccione un Decanato" v-model="form.decanato" required>
-              <option v-for="decanato  in decanatos" :key="decanato.codigo" :value="decanato.codigo">
+              <option v-for="decanato  in decanatos" :key="decanato.codigo" :value="decanato">
                 {{ decanato.nombre }}
               </option>
             </b-select>
@@ -117,6 +117,7 @@ import { mapGetters, mapActions } from 'vuex'
 import HeroBar from '@/components/HeroBar'
 import FilePicker from '@/components/FilePicker'
 import axios from "axios";
+import authHeader from '@/services/auth-header.js'
 import Cookies from "js-cookie";
 
 export default {
@@ -159,11 +160,10 @@ export default {
   },
   methods: {
     download (id) {
+      const header= authHeader()
       axios.get(`http://localhost:8080/api/pdf/downloadFile/${id}`,
         {
-          headers: {
-            'Access-Control-Allow-Origin': '*'
-          },
+          headers:header,
           responseType: 'blob',
         },
       ).then((response) => {
@@ -182,10 +182,10 @@ export default {
       const today = new Date()
       this.saveActa({
         codigo: this.form.codigo,
-        tipo: this.from.tipo,
-        descripcion: this.from.descripcion,
+        tipo: this.form.tipo,
+        descripcion: this.form.descripcion,
         estatus: 'A',
-        fecha: this.from.fecha,
+        fecha: this.form.fecha,
         ult_actializacion: today,
         decanato: this.form.decanato,
       })
@@ -199,9 +199,9 @@ export default {
       this.modal=true
       this.form.tipo=acta.tipo
       this.form.descripcion=acta.descripcion
-      this.form.fecha=new Date(acta.fecha).toISOString()
+      this.form.fecha=new Date()
       this.form.codigo=acta.codigo
-      this.form.decanato=acta.decanato.codigo
+      this.form.decanato=acta.decanato
     },
     deleteA (acta) {
       this.$buefy.dialog.confirm({
@@ -213,9 +213,9 @@ export default {
         onConfirm: () => {
           this.deleteActa(acta.codigo)
           this.$buefy.toast.open('Acta Eliminada!')
-          this.fetchActiveActas()
         }
       })
+      this.fetchActiveActas()
     }
   }
 }
