@@ -41,9 +41,9 @@
                           <td>{{acta.fecha}}</td>
                           <td>{{acta.decanato.nombre}}</td>
                           <td>
-                              <a class="button is-small is-info mr-3" @click="modal = true">Editar</a>
-                              <a class="button is-small is-danger mr-3" @click="deleteA">Eliminar</a>
-                              <a class="button is-small is-warning mr-3" @click="download">Descargar PDF</a>
+                              <a class="button is-small is-info mr-3" @click="editar(acta)">Editar</a>
+                              <a class="button is-small is-danger mr-3" @click="deleteA(acta)">Eliminar</a>
+                              <a class="button is-small is-warning mr-3" @click="download(acta.pdf.id)">Descargar PDF</a>
                           </td>
                         </tr>
                       </tbody>
@@ -63,8 +63,8 @@
                    <form @submit.prevent="submit">
           <b-field label="Tipo de Sesión" horizontal>
             <b-select placeholder="Seleccione una opción" rounded required icon="account"  v-model="form.tipo">
-                <option value="flint">Ordinaria</option>
-                <option value="silver">Extraordinaria</option>
+                <option value="1">Ordinaria</option>
+                <option value="2">Extraordinaria</option>
             </b-select>
           </b-field>
           <hr>
@@ -82,20 +82,20 @@
              <hr>
           <b-field label="Decanato" horizontal>
             <b-select placeholder="Seleccione un Decanato" v-model="form.decanato" required>
-              <option v-for="(decanato, index) in decanatos" :key="index" :value="decanato">
-                {{ decanato }}
+              <option v-for="decanato  in decanatos" :key="decanato.codigo" :value="decanato.codigo">
+                {{ decanato.nombre }}
               </option>
             </b-select>
           </b-field>
 
           <hr>
-          <b-field label="Adjunte el PDF del Acta Original" horizontal>
+          <!--<b-field label="Adjunte el PDF del Acta Original" horizontal>
           <file-picker v-model="customElementsForm.file" class="my-2"/>
           </b-field>
           <b-field horizontal>
             <b-field grouped>
             </b-field>
-          </b-field>
+          </b-field>-->
         </form>
                 </section>
                 <footer class="modal-card-foot">
@@ -110,12 +110,14 @@
 </template>
 
 <script>
-
+/* eslint-disable */
 import { mapGetters, mapActions } from 'vuex'
 // @ is an alias to /src
 
 import HeroBar from '@/components/HeroBar'
 import FilePicker from '@/components/FilePicker'
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export default {
   name: 'home',
@@ -129,19 +131,11 @@ export default {
       date: new Date(),
       modal: false,
       minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
-      decanatos: [
-        'DCYT',
-        'DEHA',
-        'DCEE',
-        'DCV',
-        'DA',
-        'DIC',
-        'DCS'
-      ],
       customElementsForm: {
         file: null
       },
       form: {
+        codigo: '',
         tipo: null,
         descripcion: null,
         decanato: null,
@@ -149,36 +143,79 @@ export default {
       }
     }
   },
+  created () {
+    this.fetchActiveActas()
+    this.fetchActiveDecanatos()
+  },
   computed: {
-    ...mapGetters('actas', ['actas'])
+    ...mapGetters('actas', ['actas']),
+    ...mapGetters('decanatos', ['decanatos'])
   },
   mounted () { // agregar parametro aqui y en la llamada al metodo en el boton
     this.$buefy.snackbar.open({
       message: '¡Aquí podrás consultar todas las Actas de Consejo!',
       queue: false
     })
-    this.fetchActiveActas()
     // this.fetchActas()
   },
   methods: {
-    download () {
+    download (id) {
+      axios.get(`http://localhost:8080/api/pdf/downloadFile/${id}`,
+        {
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
+          responseType: 'blob',
+        },
+      ).then((response) => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', 'file.pdf');
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      });
     },
-    ...mapActions('actas', ['fetchActiveActas', 'deleteActa', 'fetchActas']),
+    ...mapActions('actas', ['fetchActiveActas', 'deleteActa', 'fetchActas', 'saveActa']),
+    ...mapActions('decanatos', ['fetchActiveDecanatos']),
 
     edit () {
+      const today = new Date()
+      this.saveActa({
+        codigo: this.form.codigo,
+        tipo: this.from.tipo,
+        descripcion: this.from.descripcion,
+        estatus: 'A',
+        fecha: this.from.fecha,
+        ult_actializacion: today,
+        decanato: this.form.decanato,
+      })
       this.$buefy.snackbar.open({
         message: '¡Se modificó el Acta exitosamente!',
         queue: false
       })
+      this.modal=false
     },
-    deleteA () {
+    editar (acta) {
+      this.modal=true
+      this.form.tipo=acta.tipo
+      this.form.descripcion=acta.descripcion
+      this.form.fecha=new Date(acta.fecha).toISOString()
+      this.form.codigo=acta.codigo
+      this.form.decanato=acta.decanato.codigo
+    },
+    deleteA (acta) {
       this.$buefy.dialog.confirm({
         title: 'Eliminar Acta',
         message: '¿Estás de acuerdo en <b>eliminar</b> este Acta?',
         confirmText: 'Eliminar',
         type: 'is-danger',
         hasIcon: true,
-        onConfirm: () => this.$buefy.toast.open('Acta Eliminada!')
+        onConfirm: () => {
+          this.deleteActa(acta.codigo)
+          this.$buefy.toast.open('Acta Eliminada!')
+          this.fetchActiveActas()
+        }
       })
     }
   }

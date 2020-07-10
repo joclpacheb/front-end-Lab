@@ -111,32 +111,20 @@ const actions = {
     }
   }, */
 
-  /* saveArtifact({ commit }, payload) {
-    console.log(payload.id)
-    return new Promise((resolve, reject) => {
-      artifactsService
-        .updateArtefacto(payload.id, payload)
-        .then((response) => {
-          if (response.status === 200) {
-            commit(types.FILL_RESOURCE, response.data)
-            buildSuccess(
-              {
-                msg: 'The resource was updated',
-              },
-              commit,
-              resolve
-            )
-          }
-        })
-        .catch((error) => {
-          handleError(error, commit, reject)
-        })
-    })
+  saveDecanato ({ commit }, payload) {
+    console.log(payload)
+    console.log('hi')
+    decanatosService
+      .updateDecanato(payload.codigo, payload)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log('se guardo')
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   },
-  addArtifactData({ commit }, data) {
-    commit(types.ADD_RESOURCE_DATA, data)
-  }, */
-
   deleteDecanato ({ commit }, codigo) {
     decanatosService
       .deleteDecanato(codigo)

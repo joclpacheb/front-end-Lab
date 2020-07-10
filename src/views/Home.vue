@@ -41,21 +41,21 @@
           class='tile is-child mb-3'
           type='is-primary'
           icon='note-text'
-          :number='contdores.actas'
+          :number='actas'
           label='Actas Registradas'
         />
         <card-widget
           class='tile is-child mt-3'
           type='is-info'
           icon='book-open-variant'
-          :number='contdores.decanatos'
+          :number='decanatos'
           label='Decanatos Registrados'
         />
           <card-widget
           class='tile is-child mt-3'
           type='is-primary'
           icon='account-box-multiple'
-          :number='contdores.usuarios'
+          :number='usuarios'
           label='Usuario Registrados'
         />
       </div>
@@ -89,19 +89,26 @@ export default {
   },
   data () {
     return {
-
+      actas: '',
+      decanatos: '',
+      usuarios: ''
     }
   },
+  created () {
+    this.fetchContadores()
+    this.actas = parseInt(this.contadores.actas)
+    this.decanatos = parseInt(this.contadores.decanatos)
+    this.usuarios = parseInt(this.contadores.usuarios)
+    console.log(this.contadores)
+  },
   computed: {
-    ...mapGetters('actas', ['contdores'])
+    ...mapGetters('actas', ['contadores'])
   },
   mounted () {
     this.$buefy.snackbar.open({
       message: '¡Estamos felices de que estés de vuelta!',
       queue: false
     })
-    this.fetchContadores()
-    console.log(this.contdores)
   },
   methods: {
     ...mapActions('actas', ['fetchContadores']),

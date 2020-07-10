@@ -46,12 +46,12 @@
 
           <hr>
           <b-field label="Adjunte el PDF del Acta Original" horizontal>
-          <file-picker v-model="form.pdf" type="file" class="my-2" id="file" ref="file" />
+          <file-picker v-model="form.pdf" type="file" class="my-2" id="file" ref="file" required/>
         </b-field>
           <b-field horizontal>
             <b-field grouped>
               <div class="control">
-                <b-button native-type="submit" type="is-info"  @click="submit">REGISTRAR ACTA</b-button>
+                <b-button native-type="submit" type="is-info" >REGISTRAR ACTA</b-button>
               </div>
               <div class="control">
                 <b-button type="is-info is-outlined" @click="reset">LIMPIAR CAMPOS</b-button>
@@ -113,14 +113,14 @@ export default {
     this.fetchActiveDecanatos()
   },
   methods: {
-    ...mapActions(['decanatos'], ['fetchActiveDecanatos']),
+    ...mapActions('decanatos', ['fetchActiveDecanatos']),
     ...mapActions('actas', ['createActa']),
     async submit () {
       console.log(this.form)
       let formData = new FormData();
       formData.append('file', this.form.pdf)
       console.log(formData)
-      axios.post( '/api/acta/', formData,
+      axios.post( '/api/pdf/uploadFile/', formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',

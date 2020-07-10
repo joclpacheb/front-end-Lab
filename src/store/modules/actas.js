@@ -1,3 +1,4 @@
+/* eslint-disable */
 import actasService from '@/services/actasService.js'
 import * as types from '@/store/mutation-types'
 
@@ -10,7 +11,8 @@ const state = {
     estatus: '',
     fecha: '',
     ult_actializacion: '',
-    decanato: null
+    decanato: null,
+    pdf: {}
   },
   contadores: {
     actas: '',
@@ -99,7 +101,8 @@ const actions = {
     actasService.getActiveActas()
       .then((response) => {
         console.log(response.data)
-        commit('SET_ACTAS', response.data)
+        // commit('SET_ACTAS', response.data)
+        state.actas = response.data
       })
       .catch((error) => {
         console.log(error)
@@ -127,31 +130,20 @@ const actions = {
     }
   }, */
 
-  /* saveArtifact({ commit }, payload) {
-    console.log(payload.id)
-    return new Promise((resolve, reject) => {
-      artifactsService
-        .updateArtefacto(payload.id, payload)
-        .then((response) => {
-          if (response.status === 200) {
-            commit(types.FILL_RESOURCE, response.data)
-            buildSuccess(
-              {
-                msg: 'The resource was updated',
-              },
-              commit,
-              resolve
-            )
-          }
-        })
-        .catch((error) => {
-          handleError(error, commit, reject)
-        })
-    })
+  saveActa ({ commit }, payload) {
+    console.log(payload)
+    console.log('hi')
+    decanatosService
+      .updateActa(payload.codigo, payload)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log('se guardo')
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   },
-  addArtifactData({ commit }, data) {
-    commit(types.ADD_RESOURCE_DATA, data)
-  }, */
 
   deleteActa ({ commit }, codigo) {
     actasService
