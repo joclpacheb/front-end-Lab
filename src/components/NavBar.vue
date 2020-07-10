@@ -76,6 +76,8 @@ export default {
         message: '¡Nos vemos!',
         queue: false
       })
+      this.$store.dispatch('auth/logout')
+      this.$router.push('/login')
     },
     about () {
       this.$router.push('/about')
