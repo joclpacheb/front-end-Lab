@@ -223,6 +223,7 @@ export default {
   },
   data () {
     return {
+      isLoading: false,
       modal: false,
       decanatos: [
         'DCYT',

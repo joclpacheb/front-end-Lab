@@ -1,3 +1,4 @@
+/* eslint-disable */
 import actasService from '@/services/actasService.js'
 import * as types from '@/store/mutation-types'
 
@@ -10,7 +11,13 @@ const state = {
     estatus: '',
     fecha: '',
     ult_actializacion: '',
-    decanato: null
+    decanato: null,
+    pdf: {}
+  },
+  contadores: {
+    actas: '',
+    decanatos: '',
+    usuarios: ''
   }
 }
 
@@ -23,6 +30,9 @@ const mutations = {
   },
   SET_ACTA (state, acta) {
     state.acta = acta
+  },
+  SET_CONTADORES (state, contadores) {
+    state.contadores = contadores
   },
   UPDATE_ACTA (state, payload) {
     state.actas = state.actas.map((acta) => {
@@ -39,7 +49,7 @@ const mutations = {
     state.acta.fecha = data.fecha
     state.acta.ult_actializacion = data.ult_actializacion
   },
-  [types.ADD_ARTIFACT_DATA] (state, data) {
+  [types.ADD_ACTAS_DATA] (state, data) {
     switch (data.key) {
       case 'description':
         state.acta.descripcion = data.value
@@ -91,7 +101,8 @@ const actions = {
     actasService.getActiveActas()
       .then((response) => {
         console.log(response.data)
-        commit('SET_ACTAS', response.data)
+        // commit('SET_ACTAS', response.data)
+        state.actas = response.data
       })
       .catch((error) => {
         console.log(error)
@@ -119,31 +130,20 @@ const actions = {
     }
   }, */
 
-  /* saveArtifact({ commit }, payload) {
-    console.log(payload.id)
-    return new Promise((resolve, reject) => {
-      artifactsService
-        .updateArtefacto(payload.id, payload)
-        .then((response) => {
-          if (response.status === 200) {
-            commit(types.FILL_RESOURCE, response.data)
-            buildSuccess(
-              {
-                msg: 'The resource was updated',
-              },
-              commit,
-              resolve
-            )
-          }
-        })
-        .catch((error) => {
-          handleError(error, commit, reject)
-        })
-    })
+  saveActa ({ commit }, payload) {
+    console.log(payload)
+    console.log('hi')
+    decanatosService
+      .updateActa(payload.codigo, payload)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log('se guardo')
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   },
-  addArtifactData({ commit }, data) {
-    commit(types.ADD_RESOURCE_DATA, data)
-  }, */
 
   deleteActa ({ commit }, codigo) {
     actasService
@@ -152,6 +152,16 @@ const actions = {
         if (response.status === 200) {
           console.log('se elimino')
         }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
+  fetchContadores ({ commit }) {
+    actasService.getContador()
+      .then((response) => {
+        console.log(response.data)
+        commit('SET_CONTADORES', response.data)
       })
       .catch((error) => {
         console.log(error)
@@ -165,7 +175,8 @@ const getters = {
   actas: (state) => {
     return state.actas
   },
-  acta: (state) => state.acta
+  acta: (state) => state.acta,
+  contadores: (state) => state.contadores
 }
 
 export default {
