@@ -15,6 +15,8 @@ import './registerServiceWorker'
 /* Vue. Main component */
 import App from './App.vue'
 
+// import VeeValidate from 'vee-validate'
+
 /* Default title tag */
 const defaultDocumentTitle = 'Proyecto de Laboratorio II'
 
@@ -31,6 +33,7 @@ router.afterEach(to => {
 
 Vue.config.productionTip = false
 
+// Vue.use(VeeValidate)
 Vue.use(Buefy)
 
 new Vue({
