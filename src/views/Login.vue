@@ -13,11 +13,11 @@
             </figure>
             <div class="box">
               <form name="form" @submit.prevent="handleLogin">
-                <b-field label="Cédula">
+                <b-field label="Usuario">
                   <b-input
                     v-model="user.username"
                     type="name"
-                    placeholder="Cedula"
+                    placeholder="Usuario"
                     rules="required"
                   ></b-input>
                 </b-field>
