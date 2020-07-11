@@ -42,11 +42,6 @@ export default {
         'Acciones',
         [
           {
-            to: '/login',
-            label: 'Login-TMP',
-            icon: 'table'
-          },
-          {
             label: 'Actas',
             icon: 'square-edit-outline',
             menu: [
@@ -99,11 +94,6 @@ export default {
         ],
         'Acciones',
         [
-          {
-            to: '/login',
-            label: 'Login-TMP',
-            icon: 'table'
-          },
           {
             label: 'Actas',
             icon: 'square-edit-outline',

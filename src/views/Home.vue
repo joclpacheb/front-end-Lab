@@ -21,13 +21,13 @@
     </span>
     <span>Reporte de Actas</span>
   </button>
-   <button class="button is-warning mt-3 mx-3" @click="listD()">
+   <button v-if="rolUser" class="button is-warning mt-3 mx-3" @click="listD()">
     <span class="icon">
       <i class="fas fa-sun fa-spin fa-pulse"></i>
     </span>
     <span>Decanatos</span>
   </button>
-   <button class="button is-success mt-3 mx-3" @click="listU()">
+   <button v-if="rolUser"  class="button is-success mt-3 mx-3" @click="listU()">
     <span class="icon">
       <i class="fas fa-stroopwafel fa-spin fa-pulse"></i>
     </span>
@@ -82,6 +82,7 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'home',
+
   components: {
 
     CardWidget,
@@ -91,10 +92,14 @@ export default {
     return {
       actas: null,
       decanatos: null,
-      usuarios: null
+      usuarios: null,
+      rolUser: ''
     }
   },
   created () {
+    const user = JSON.parse(localStorage.getItem('user'))
+    console.log(user)
+    this.rolUser = user.roles[0] === 'ROLE_ADMIN'
     this.fetchContadores()
     this.actas = parseInt(this.contadores.actas)
     this.decanatos = parseInt(this.contadores.decanatos)
