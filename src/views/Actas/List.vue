@@ -89,7 +89,13 @@
               </option>
             </b-select>
           </b-field>
-
+         <b-field label="Estado" horizontal>
+           <b-select placeholder="Seleccione un Estado" v-model="form.estado" required>
+             <option v-for="estado in estados" :key="estado.codigo" :value="estado">
+               {{ estado.nombre }}
+             </option>
+           </b-select>
+         </b-field>
           <hr>
           <!--<b-field label="Adjunte el PDF del Acta Original" horizontal>
           <file-picker v-model="customElementsForm.file" class="my-2"/>
@@ -142,7 +148,8 @@ export default {
         tipo: null,
         descripcion: null,
         decanato: null,
-        fecha: today
+        fecha: today,
+        estado:''
       }
     }
   },
@@ -159,7 +166,7 @@ export default {
     this.fetchActiveDecanatos()
   },
   computed: {
-    ...mapGetters('actas', ['actas']),
+    ...mapGetters('actas', ['actas','estados']),
     ...mapGetters('decanatos', ['decanatos'])
   },
   mounted () { // agregar parametro aqui y en la llamada al metodo en el boton
@@ -168,6 +175,7 @@ export default {
       queue: false
     })
     // this.fetchActas()
+    this.fetchEstados()
   },
   methods: {
     download (id) {
@@ -186,7 +194,7 @@ export default {
         fileLink.click();
       });
     },
-    ...mapActions('actas', ['fetchActiveActas', 'deleteActa', 'fetchActas', 'saveActa','fetchActasDecanato']),
+    ...mapActions('actas', ['fetchActiveActas', 'deleteActa', 'fetchActas', 'saveActa','fetchActasDecanato','fetchEstados']),
     ...mapActions('decanatos', ['fetchActiveDecanatos']),
 
     edit () {
@@ -196,6 +204,7 @@ export default {
         tipo: this.form.tipo,
         descripcion: this.form.descripcion,
         estatus: 'A',
+        estado:this.form.estado,
         fecha: this.form.fecha,
         ult_actializacion: today,
         decanato: this.form.decanato,
@@ -213,6 +222,7 @@ export default {
       this.form.fecha=new Date()
       this.form.codigo=acta.codigo
       this.form.decanato=acta.decanato
+      this.form.estado=acta.estado
     },
     deleteA (acta) {
       this.$buefy.dialog.confirm({

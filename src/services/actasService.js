@@ -38,4 +38,8 @@ export default {
   deleteEstado (codigo) {
     return api.delete(`/estado/${codigo}`)
   },
+  getActasReporte(cod, mes){
+    return api.get(`/reporte/listadeActas/${cod}/${mes}`)
+
+  }
 }

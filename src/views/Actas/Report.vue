@@ -34,7 +34,7 @@
             </b-select>
           </b-field>
         <b-field label="Cantidad de actas" horizontal>
-          <b-input v-if="show" icon="account" v-model="form.resultado" placeholder="Cantidad de actas" :disabled="active" />
+          <b-input icon="account" v-model="form.resultado" placeholder="Cantidad de actas" :disabled="active" />
         </b-field>
         <b-field horizontal>
           <div class="control">
@@ -45,6 +45,43 @@
       </div>
       </div>
     </div>
+      <div class="columns">
+        <div class="column">
+          <div class="container">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  Actas de Consejo de Decanato
+                </p>
+              </header>
+              <div class="card-content">
+                <table class="table is-fullwidth">
+                  <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Decanato</th>
+                    <th>Estado</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="acta in actas" :key="acta.codigo">
+                    <td>{{acta.codigo}}</td>
+                    <td>{{acta.tipo}}</td>
+                    <td>{{acta.descripcion}}</td>
+                    <td>{{acta.fecha}}</td>
+                    <td>{{acta.decanato.nombre}}</td>
+                    <td>{{acta.estado.nombre}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -66,7 +103,6 @@ export default {
     return {
       date: new Date(),
       active:true,
-      show:false,
       form: {
         decanato: null,
         fecha: date,
@@ -77,7 +113,7 @@ export default {
   },
   computed: {
     ...mapGetters('decanatos', ['decanatos']),
-    ...mapGetters('actas', ['ContadorActas'])
+    ...mapGetters('actas', ['ContadorActas','actas'])
   },
   created() {
     this.fetchActiveDecanatos()
@@ -90,16 +126,19 @@ export default {
   },
   methods: {
     ...mapActions('decanatos', ['fetchActiveDecanatos']),
-    ...mapActions('actas', ['fetchContadorActas']),
+    ...mapActions('actas', ['fetchContadorActas','fetchActasReporte']),
     async buscar(){
       const month=new Date(this.form.fecha).getMonth()+1
       await this.fetchContadorActas({
         codigo:this.form.decanato.codigo,
         month:month
       })
+      await this.fetchActasReporte({
+        codigo:this.form.decanato.codigo,
+        month:month
+      })
       this.form.resultado=this.ContadorActas
       console.log(this.form.resultado)
-      this.show=true
     }
   }
 }

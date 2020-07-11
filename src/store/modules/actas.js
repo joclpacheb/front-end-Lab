@@ -221,9 +221,19 @@ const actions = {
   fetchContadorActas ({ commit }, payload) {
     actasService.getContadorActas(payload.codigo, payload.month)
       .then((response) => {
-        console.log("hola")
         console.log(response.data)
         commit('SET_CONTADORACTAS', response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
+  fetchActasReporte ({ commit }, payload) {
+    actasService.getActasReporte(payload.codigo, payload.month)
+      .then((response) => {
+        console.log("hola")
+        console.log(response.data)
+        commit('SET_ACTAS', response.data)
       })
       .catch((error) => {
         console.log(error)
