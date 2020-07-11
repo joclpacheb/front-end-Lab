@@ -98,6 +98,15 @@ const routes = [
   },
   {
     meta: {
+      title: 'ActasStatus'
+    },
+    path: '/actas/status',
+    name: 'statusActas',
+    component: () =>
+      import(/* webpackChunkName: 'tables' */ '../views/Actas/Estados.vue')
+  },
+  {
+    meta: {
       title: 'Forms'
     },
     path: '/forms',
