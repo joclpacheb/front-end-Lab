@@ -124,17 +124,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('estados', ['estados'])
+    ...mapGetters('actas', ['estados'])
   },
   mounted () {
     this.$buefy.snackbar.open({
       message: '¡Aquí puedes consultar y registrar estados!',
       queue: false
     })
-    this.fetchActiveDecanatos()
+    this.fetchEstados()
   },
   methods: {
-    ...mapActions('estados', ['fetchActiveEstados', 'deleteEstado', 'createEstado', 'saveEstado']),
+    ...mapActions('actas', ['fetchEstados', 'deleteEstado', 'createEstado', 'saveEstado']),
     submit () {
       this.createEstado({
         nombre: this.form.name,
@@ -144,7 +144,7 @@ export default {
         message: '¡Se registró el Estado exitosamente!',
         queue: false
       })
-      this.fetchActiveEstados()
+      this.fetchEstados()
     },
     reset () {
       this.form = mapValues(this.form, item => {
@@ -164,7 +164,7 @@ export default {
         nombre: this.form2.name,
         estatus: 'A'
       })
-      this.fetchActiveEstados()
+      this.fetchEstados()
       this.$buefy.snackbar.open({
         message: '¡Se modificó el Estado exitosamente!',
         queue: false
@@ -178,9 +178,10 @@ export default {
         type: 'is-danger',
         hasIcon: true,
         onConfirm: () => {
-          this.deleteDecanato(estado.codigo)
+          this.deleteEstado(estado.codigo)
           this.$buefy.toast.open('Estado Eliminado!')
-          this.fetchActiveDecanatos()
+          this.fetchEstados()
+          history.go()
         }
       })
     },

@@ -173,7 +173,7 @@ const actions = {
     console.log(payload)
     console.log('hi')
     actasService
-      .updateEstado(payload.id, payload)
+      .updateEstado(payload.codigo, payload)
       .then((response) => {
         if (response.status === 200) {
           console.log('se guardo')
@@ -196,7 +196,7 @@ const actions = {
         console.log(error)
       })
   },
-  deleteEstado ({ commit }, id) {
+  deleteEstado ({ commit }, codigo) {
     actasService
       .deleteEstado(codigo)
       .then((response) => {

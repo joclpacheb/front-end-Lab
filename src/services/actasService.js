@@ -27,15 +27,15 @@ export default {
     return api.get(`/reporte/actasPorDecanato/${cod}/${mes}`)
   },
   getEstados(){
-    return api.get('/estado/')
+    return api.get('/estado/activos/')
   },
-  updateEstado (id, estado) {
-    return api.put(`/estado/${id}`, estado)
+  updateEstado (codigo, estado) {
+    return api.put(`/estado/${codigo}`, estado)
   },
   createEstado (estado) {
     return api.post('/estado/', estado)
   },
-  deleteEstado (id) {
-    return api.delete(`/estado/${id}`)
+  deleteEstado (codigo) {
+    return api.delete(`/estado/${codigo}`)
   },
 }

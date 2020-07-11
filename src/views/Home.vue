@@ -21,6 +21,12 @@
     </span>
     <span>Reporte de Actas</span>
   </button>
+    <button v-if="rolUser" class="button is-success mt-3 mx-3"  @click="estatusE()">
+    <span class="icon">
+      <i class="fas fa-atom fa-spin fa-pulse"></i>
+    </span>
+      <span>Estados de actas</span>
+    </button>
    <button v-if="rolUser" class="button is-warning mt-3 mx-3" @click="listD()">
     <span class="icon">
       <i class="fas fa-sun fa-spin fa-pulse"></i>
@@ -131,6 +137,9 @@ export default {
     },
     listU () {
       this.$router.push('/usuarios')
+    },
+    estatusE () {
+      this.$router.push('/actas/status')
     }
   }
 }

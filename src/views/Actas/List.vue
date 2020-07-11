@@ -30,6 +30,7 @@
                             <th>Descripción</th>
                             <th>Fecha</th>
                             <th>Decanato</th>
+                            <th>Estado</th>
                             <th v-if="rol">Acciones</th>
                           </tr>
                         </thead>
@@ -40,6 +41,7 @@
                           <td>{{acta.descripcion}}</td>
                           <td>{{acta.fecha}}</td>
                           <td>{{acta.decanato.nombre}}</td>
+                          <td>{{acta.estado.nombre}}</td>
                           <td v-if="rol">
                               <a class="button is-small is-info mr-3" @click="editar(acta)">Editar</a>
                               <a class="button is-small is-danger mr-3" @click="deleteA(acta)">Eliminar</a>

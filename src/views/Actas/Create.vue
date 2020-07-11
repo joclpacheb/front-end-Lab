@@ -43,6 +43,13 @@
               </option>
             </b-select>
           </b-field>
+          <b-field label="Estado" horizontal>
+            <b-select placeholder="Seleccione un Estado" v-model="form.estado" required>
+              <option v-for="estado in estados" :key="estado.codigo" :value="estado">
+                {{ estado.nombre }}
+              </option>
+            </b-select>
+          </b-field>
 
           <hr>
           <b-field label="Adjunte el PDF del Acta Original" horizontal>
@@ -98,13 +105,15 @@ export default {
         fecha: today,
         estatus: 'A',
         ult_actializacion: today,
-        pdf: ''
+        pdf: '',
+        estado:''
       }
 
     }
   },
   computed: {
-    ...mapGetters('decanatos', ['decanatos'])
+    ...mapGetters('decanatos', ['decanatos']),
+    ...mapGetters('actas', ['estados'])
   },
   mounted () {
     this.$buefy.snackbar.open({
@@ -112,10 +121,11 @@ export default {
       queue: false
     })
     this.fetchActiveDecanatos()
+    this.fetchEstados()
   },
   methods: {
     ...mapActions('decanatos', ['fetchActiveDecanatos']),
-    ...mapActions('actas', ['createActa']),
+    ...mapActions('actas', ['createActa','fetchEstados']),
     async submit () {
       const user = JSON.parse(localStorage.getItem('user'))
       const header ={ Authorization: 'Bearer ' + user.accessToken,
@@ -142,6 +152,7 @@ export default {
           decanato: this.form.decanato,
           fecha: this.form.fecha,
           estatus: this.form.estatus,
+          estado:this.form.estado,
           ult_actializacion: this.form.ult_actializacion
         }
       )
