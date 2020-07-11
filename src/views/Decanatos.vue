@@ -96,10 +96,10 @@
            <b-field label="Nombre" horizontal>
               <b-input icon="account" v-model="form2.name" placeholder="Nombre" name="Nombre del Decanato" required />
             </b-field>
-           <b-field label="Datos" horizontal>
+           <b-field label="Dirección" horizontal>
              <b-input icon="account" v-model="form2.direccion" placeholder="Direccion" name="Nombre del Decanato" required />
            </b-field>
-           <b-field label="Datos" horizontal>
+           <b-field label="Telefono" horizontal>
              <b-input icon="account" v-model="form2.telefono" placeholder="Telefono" name="Nombre del Decanato" required />
            </b-field>
                   </form>

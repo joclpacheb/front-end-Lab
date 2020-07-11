@@ -12,6 +12,7 @@ const state = {
     fecha: '',
     ult_actializacion: '',
     decanato: null,
+    estado:null,
     pdf: {}
   },
   contadores: {
@@ -20,14 +21,25 @@ const state = {
     usuarios: ''
   },
   ContadorActas: null,
+  estado:{
+      id:'',
+      nombre:'',
+  },
+  estados: []
 }
 
 const mutations = {
   ADD_ACTA (state, acta) {
     state.actas.push(acta)
   },
+  ADD_ESTADO (state, estado) {
+    state.actas.push(estado)
+  },
   SET_ACTAS (state, actas) {
     state.actas = actas
+  },
+  SET_ESTADOS (state, estados) {
+    state.estados = estados
   },
   SET_ACTA (state, acta) {
     state.acta = acta
@@ -91,11 +103,32 @@ const actions = {
         console.log(error)
       })
   },
+  createEstado ({ commit }, estado) {
+    return actasService
+      .createEstado(estado)
+      .then((response) => {
+        commit('ADD_ESTADO', estado)
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
   fetchActas ({ commit }) {
     actasService.getActas()
       .then((response) => {
         console.log(response.data)
         commit('SET_ACTAS', response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
+  fetchEstados ({ commit }) {
+    actasService.getEstados()
+      .then((response) => {
+        console.log(response.data)
+        commit('SET_ESTADOS', response.data)
       })
       .catch((error) => {
         console.log(error)
@@ -122,28 +155,6 @@ const actions = {
         console.log(error)
       })
   },
-  /* fetchArtifact({ commit, getters, dispatch }, id) {
-    console.log(id)
-    const artifact = getters.getArtifactById(id)
-    if (artifact) {
-      commit('SET_ARTIFACT', artifact)
-    } else {
-      artifactsService
-        .getArtefacto(id)
-        .then((response) => {
-          console.log(response.data)
-          commit('SET_ARTIFACT', response.data)
-        })
-        .catch((error) => {
-          const notification = {
-            type: 'error',
-            message: 'There was a problem fetching meeting: ' + error.message,
-          }
-          dispatch('notification/add', notification, { root: true })
-        })
-    }
-  }, */
-
   saveActa ({ commit }, payload) {
     console.log(payload)
     console.log('hi')
@@ -158,10 +169,36 @@ const actions = {
         console.log(error)
       })
   },
+  saveEstado ({ commit }, payload) {
+    console.log(payload)
+    console.log('hi')
+    actasService
+      .updateEstado(payload.id, payload)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log('se guardo')
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
 
   deleteActa ({ commit }, codigo) {
     actasService
       .deleteActa(codigo)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log('se elimino')
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
+  deleteEstado ({ commit }, id) {
+    actasService
+      .deleteEstado(codigo)
       .then((response) => {
         if (response.status === 200) {
           console.log('se elimino')
@@ -203,7 +240,9 @@ const getters = {
   },
   acta: (state) => state.acta,
   contadores: (state) => state.contadores,
-  ContadorActas: (state) => state.ContadorActas
+  ContadorActas: (state) => state.ContadorActas,
+  estado: (estado)=> state.estado,
+  estados:(state)=> state.estados
 }
 
 export default {

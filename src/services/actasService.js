@@ -1,3 +1,4 @@
+/* eslint-disable */
 import api from '@/services/api'
 
 export default {
@@ -24,5 +25,17 @@ export default {
   },
   getContadorActas (cod, mes) {
     return api.get(`/reporte/actasPorDecanato/${cod}/${mes}`)
-  }
+  },
+  getEstados(){
+    return api.get('/estado/')
+  },
+  updateEstado (id, estado) {
+    return api.put(`/estado/${id}`, estado)
+  },
+  createEstado (estado) {
+    return api.post('/estado/', estado)
+  },
+  deleteEstado (id) {
+    return api.delete(`/estado/${id}`)
+  },
 }
