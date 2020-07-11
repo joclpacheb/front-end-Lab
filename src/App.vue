@@ -110,6 +110,10 @@ export default {
                 to: '/actas/report',
                 label: 'Reporte de Actas'
               },
+              {
+                to: '/actas/status',
+                label: 'Estado de Actas'
+              },
             ]
           },
         ],
