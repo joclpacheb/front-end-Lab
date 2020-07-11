@@ -10,8 +10,8 @@ export default {
   createActa (acta) {
     return api.post('/acta/', acta)
   },
-  getActa (id) {
-    return api.get(`/acta/${id}`)
+  getActasDecanato (id) {
+    return api.get(`/acta/decanato/${id}/`)
   },
   updateActa (id, acta) {
     return api.put(`/acta/${id}`, acta)
@@ -21,5 +21,8 @@ export default {
   },
   getContador () {
     return api.get('/dash/contadores')
+  },
+  getContadorActas (cod, mes) {
+    return api.get(`/reporte/actasPorDecanato/${cod}/${mes}`)
   }
 }

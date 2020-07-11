@@ -89,9 +89,9 @@ export default {
   },
   data () {
     return {
-      actas: '',
-      decanatos: '',
-      usuarios: ''
+      actas: null,
+      decanatos: null,
+      usuarios: null
     }
   },
   created () {

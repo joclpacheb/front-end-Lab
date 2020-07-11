@@ -19,10 +19,11 @@
 
     <div class="column">
      <card-component title="Crear un Usuario Nuevo" icon="ballot">
-      <form @submit.prevent="submit">
+            <form name="form" @submit.prevent="handleRegister">
+
           <b-field label="Datos de Ingreso" horizontal>
             <b-field>
-              <b-input icon="account-box-outline" v-model="form.id" placeholder="Cédula" name="Cédula" required />
+              <b-input icon="account-box-outline" v-model="form.cedula" placeholder="Cédula" name="Cédula" required />
             </b-field>
             <b-field>
               <b-input icon="email" type="email" v-model="form.email" placeholder="E-mail" name="E-mail"/>
@@ -106,35 +107,20 @@
                           </tr>
                         </thead>
                       <tbody>
-                        <tr>
-                          <td>55555555</td>
-                          <td>John</td>
-                          <td>Doe</td>
-                          <td>Secretario</td>
-                          <td>doejohn@hotmail.com</td>
-                          <td>0412-555555</td>
-                          <td>DEHA</td>
+                        <tr v-for="user in users" :key="user.cedula">
+                          <td>{{user.ceduala}}</td>
+                          <td>{{user.nombre}}</td>
+                          <td>{{user.apellido}}</td>
+                          <td>{{user.roles[0]}}</td>
+                          <td>{{user.email}}</td>
+                          <td>{{user.telefono}}</td>
+                          <td>{{user.decanato.nombre}}</td>
                           <td>
                             <div class="field is-grouped">
                               <a class="button is-small is-info mr-3" @click="modal=true">Editar</a>
                               <a class="button is-small is-danger"  @click="deleteU">Eliminar</a>
                               </div>
                           </td>
-                        </tr>
-                        <tr>
-                          <td>26169922</td>
-                          <td>Jose</td>
-                          <td>Pacheco</td>
-                          <td>Administrador</td>
-                          <td>joclpacheb@hotmail.com</td>
-                          <td>0412-4544884</td>
-                          <td>DCYT</td>
-                          <td>
-                            <div class="field is-grouped">
-                                <a class="button is-small is-info mr-3" @click="modal = true">Editar</a>
-                                <a class="button is-small is-danger" @click="deleteU">Eliminar</a>
-                            </div>
-                            </td>
                         </tr>
                       </tbody>
                     </table>
@@ -178,16 +164,16 @@
             </b-field>
           </b-field>
           <b-field label="Decanato" horizontal>
-            <b-select placeholder="Seleccione un Decanato" v-model="form2.faculty" required>
-              <option v-for="(decanato, index) in decanatos" :key="index" :value="decanato">
-                {{ decanato }}
+            <b-select placeholder="Seleccione un Decanato" v-model="form.decanato" required>
+              <option v-for="decanato in decanatos" :key="decanato.codigo" :value="decanato">
+                {{ decanato.nombre }}
               </option>
             </b-select>
-            </b-field>
+          </b-field>
             <b-field label="Tipo de Usuario" horizontal>
             <b-select placeholder="Seleccione una opción" rounded required icon="account"  v-model="form2.type">
-                <option value="flint">Administrador</option>
-                <option value="silver">Secretario</option>
+                <option value="1">Administrador</option>
+                <option value="2">Secretario</option>
             </b-select>
           </b-field>
           <b-field horizontal label="Contraseña" message="Será utilizada por el usuario para Iniciar Sesión">
@@ -215,6 +201,8 @@
 import CardComponent from '@/components/CardComponent'
 import HeroBar from '@/components/HeroBar'
 import mapValues from 'lodash/mapValues'
+import { mapGetters, mapActions } from 'vuex'
+import User from '../models/user'
 
 export default {
   name: 'home',
@@ -223,17 +211,13 @@ export default {
   },
   data () {
     return {
+
+      user: new User('', '', '', ''),
+      submitted: false,
+      successful: false,
+      message: '',
       isLoading: false,
       modal: false,
-      decanatos: [
-        'DCYT',
-        'DEHA',
-        'DCEE',
-        'DCV',
-        'DA',
-        'DIC',
-        'DCS'
-      ],
       form: {
         id: null,
         name: null,
@@ -259,19 +243,48 @@ export default {
     }
   },
   computed: {
-
+    ...mapGetters('decanatos', ['decanatos']),
+    ...mapGetters('users', ['users']),
+    loggedIn () {
+      return this.$store.state.auth.status.loggedIn
+    }
   },
   mounted () {
     this.$buefy.snackbar.open({
       message: '¡Aquí puedes consultar y registrar usuarios!',
       queue: false
     })
+    this.fetchActiveDecanatos()
+    this.fetchUsers()
   },
   methods: {
+    ...mapActions('decanatos', ['fetchActiveDecanatos']),
+    ...mapActions('users', ['fetchUsers']),
     submit () {
       this.$buefy.snackbar.open({
         message: '¡Se registró el Usuario exitosamente!',
         queue: false
+      })
+    },
+    handleRegister () {
+      this.message = ''
+      this.submitted = true
+      this.$validator.validate().then(isValid => {
+        if (isValid) {
+          this.$store.dispatch('auth/register', this.user).then(
+            data => {
+              this.message = data.message
+              this.successful = true
+            },
+            error => {
+              this.message =
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString()
+              this.successful = false
+            }
+          )
+        }
       })
     },
     reset () {

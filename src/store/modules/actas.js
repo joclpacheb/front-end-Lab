@@ -18,7 +18,8 @@ const state = {
     actas: '',
     decanatos: '',
     usuarios: ''
-  }
+  },
+  ContadorActas: null,
 }
 
 const mutations = {
@@ -33,6 +34,9 @@ const mutations = {
   },
   SET_CONTADORES (state, contadores) {
     state.contadores = contadores
+  },
+  SET_CONTADORACTAS (state, ContadorActas) {
+    state.ContadorActas = ContadorActas
   },
   UPDATE_ACTA (state, payload) {
     state.actas = state.actas.map((acta) => {
@@ -101,8 +105,18 @@ const actions = {
     actasService.getActiveActas()
       .then((response) => {
         console.log(response.data)
-        // commit('SET_ACTAS', response.data)
-        state.actas = response.data
+        commit('SET_ACTAS', response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
+  fetchActasDecanato ({ commit }, id) {
+    console.log(id)
+    actasService.getActasDecanato(id)
+      .then((response) => {
+        console.log(response.data)
+        commit('SET_ACTAS', response.data)
       })
       .catch((error) => {
         console.log(error)
@@ -166,7 +180,19 @@ const actions = {
       .catch((error) => {
         console.log(error)
       })
+  },
+  fetchContadorActas ({ commit }, payload) {
+    actasService.getContadorActas(payload.codigo, payload.month)
+      .then((response) => {
+        console.log("hola")
+        console.log(response.data)
+        commit('SET_CONTADORACTAS', response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
+
 }
 const getters = {
   getActaByCodigo: (state) => (codigo) => {
@@ -176,7 +202,8 @@ const getters = {
     return state.actas
   },
   acta: (state) => state.acta,
-  contadores: (state) => state.contadores
+  contadores: (state) => state.contadores,
+  ContadorActas: (state) => state.ContadorActas
 }
 
 export default {

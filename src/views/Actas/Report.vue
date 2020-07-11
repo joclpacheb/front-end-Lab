@@ -28,48 +28,20 @@
              <hr>
           <b-field label="Decanato" horizontal>
             <b-select placeholder="Seleccione un Decanato" v-model="form.decanato" required>
-              <option v-for="(decanato, index) in decanatos" :key="index" :value="decanato">
-                {{ decanato }}
+              <option v-for="decanato in decanatos" :key="decanato.codigo" :value="decanato">
+                {{ decanato.nombre }}
               </option>
             </b-select>
           </b-field>
-      </card-component>
-          <div class="card">
-              <header class="card-header">
-                  <p class="card-header-title">
-                    Actas de Consejo de Decanato
-                  </p>
-                </header>
-                <div class="card-content">
-                    <table class="table is-fullwidth">
-                        <thead>
-                          <tr>
-                            <th>Código</th>
-                            <th>Tipo</th>
-                            <th>Descripción</th>
-                            <th>Fecha</th>
-                            <th>Decanato</th>
-                          </tr>
-                        </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Ordinario</td>
-                          <td>Con quórum</td>
-                          <td>05/10/20</td>
-                          <td>DCYT</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Extraordinario</td>
-                            <td>Sesión Permanente</td>
-                            <td>04/01/20</td>
-                            <td>DEHA</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                </div>
+        <b-field label="Cantidad de actas" horizontal>
+          <b-input v-if="show" icon="account" v-model="form.resultado" placeholder="Cantidad de actas" :disabled="active" />
+        </b-field>
+        <b-field horizontal>
+          <div class="control">
+            <b-button  type="is-info" @click="buscar" >Buscar</b-button>
           </div>
+        </b-field>
+      </card-component>
       </div>
       </div>
     </div>
@@ -78,9 +50,10 @@
 </template>
 
 <script>
-
+/* eslint-disable */
 import HeroBar from '@/components/HeroBar'
 import CardComponent from '@/components/CardComponent'
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: 'Forms',
@@ -89,27 +62,25 @@ export default {
   },
   data () {
     const date = new Date()
+
     return {
       date: new Date(),
-      decanatos: [
-        'DCYT',
-        'DEHA',
-        'DCEE',
-        'DCV',
-        'DA',
-        'DIC',
-        'DCS'
-      ],
-
+      active:true,
+      show:false,
       form: {
         decanato: null,
-        fecha: date
+        fecha: date,
+        resultado:0
       }
 
     }
   },
   computed: {
-
+    ...mapGetters('decanatos', ['decanatos']),
+    ...mapGetters('actas', ['ContadorActas'])
+  },
+  created() {
+    this.fetchActiveDecanatos()
   },
   mounted () {
     this.$buefy.snackbar.open({
@@ -118,7 +89,18 @@ export default {
     })
   },
   methods: {
-
+    ...mapActions('decanatos', ['fetchActiveDecanatos']),
+    ...mapActions('actas', ['fetchContadorActas']),
+    async buscar(){
+      const month=new Date(this.form.fecha).getMonth()+1
+      await this.fetchContadorActas({
+        codigo:this.form.decanato.codigo,
+        month:month
+      })
+      this.form.resultado=this.ContadorActas
+      console.log(this.form.resultado)
+      this.show=true
+    }
   }
 }
 </script>

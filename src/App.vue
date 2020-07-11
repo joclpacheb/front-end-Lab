@@ -1,13 +1,15 @@
 <template>
   <div id="app">
     <nav-bar/>
-    <aside-menu :menu="menu"/>
+    <aside-menu v-if="rolUser" :menu="menu"/>
+    <aside-menu v-else :menu="menu1"/>
     <router-view/>
     <footer-bar/>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
 // @ is an alias to /src
 import NavBar from '@/components/NavBar'
 import AsideMenu from '@/components/AsideMenu'
@@ -19,6 +21,11 @@ export default {
     FooterBar,
     AsideMenu,
     NavBar
+  },
+  data () {
+    return {
+      rolUser:'',
+    }
   },
   computed: {
     menu () {
@@ -68,33 +75,54 @@ export default {
             icon: 'book-open-variant'
           }
         ],
-        // 'De la plantila:',
-        // [
-        //   {
-        //     to: '/forms',
-        //     label: 'Forms',
-        //     icon: 'square-edit-outline'
-        //   },
-        //   {
-        //     to: '/profile',
-        //     label: 'Profile',
-        //     icon: 'account-circle'
-        //   },
-        //   {
-        //     label: 'Submenus',
-        //     subLabel: 'Submenus Example',
-        //     icon: 'view-list',
-        //     menu: [
-        //       {
-        //         href: '#void',
-        //         label: 'Sub-item One'
-        //       },
-        //       {
-        //         href: '#void',
-        //         label: 'Sub-item Two'
-        //       }
-        //     ]
-        //   }],
+        'Acerca de...',
+        [
+
+          {
+            href: '/about',
+            label: '¿Cyberpunk?',
+            icon: 'help-circle'
+          }
+        ]
+      ]
+    },
+    menu1 () {
+      return [
+        'General',
+        [
+          {
+            to: '/',
+            icon: 'desktop-mac',
+            label: 'Inicio',
+            updateMark: true
+          }
+        ],
+        'Acciones',
+        [
+          {
+            to: '/login',
+            label: 'Login-TMP',
+            icon: 'table'
+          },
+          {
+            label: 'Actas',
+            icon: 'square-edit-outline',
+            menu: [
+              {
+                href: '/actas/create',
+                label: 'Crear Acta'
+              },
+              {
+                to: '/actas/list',
+                label: 'Consultar Actas'
+              },
+              {
+                to: '/actas/report',
+                label: 'Reporte de Actas'
+              },
+            ]
+          },
+        ],
         'Acerca de...',
         [
 
@@ -108,6 +136,9 @@ export default {
     }
   },
   created () {
+    const user = JSON.parse(localStorage.getItem('user'))
+    console.log(user)
+    this.rolUser=user.roles[0]==='ROLE_ADMIN'
     this.$store.commit('user', {
       name: 'Nombre',
       email: 'Correo@example.com',

@@ -1,11 +1,11 @@
 <template>
   <ValidationObserver ref="obs">
     <div>
-      <navbar></navbar>
+      <!--<navbar></navbar>-->
       <div class="container is-fullheight hero-body">
         <div class="columns is-centered">
           <div class="column is-6">
-            <login-logo></login-logo>
+            <!--<login-logo></login-logo>-->
             <h3 class="title has-text-centered has-text-dark">Inicia Sesión</h3>
             <h3 class="has-text-centered has-text-weight-light">¡Ya estás aquí!</h3>
             <figure class="image is-medium">
@@ -22,7 +22,7 @@
                   ></b-input>
                 </b-field>
 
-                <b-field label="Cédula">
+                <b-field label="Contraseña">
                   <b-input
                     label="Contraseña"
                     v-model="user.password"
@@ -30,7 +30,7 @@
                     placeholder="Password"
                     minlength="6"
                     password-reveal
-                    v-validate="'required'"
+                    rules="required"
                   ></b-input>
                 </b-field>
 
@@ -47,12 +47,12 @@
                 >Entrar al Sistema</button>
               </form>
             </div>
-            <div class="has-text-centered">
+            <!--<div class="has-text-centered">
               <button
                 class="button is-info is-large is-fullwidth is-outlined"
                 @click="modal=true"
               >¡Me quiero Registrar!</button>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@
                     <b-input type="tel" v-model="form2.phone" name="phone" expanded />
                   </b-field>
                 </b-field>
-                <b-field label="Decanato" horizontal>
+                <!--<b-field label="Decanato" horizontal>
                   <b-select placeholder="Seleccione un Decanato" v-model="form2.faculty" required>
                     <option
                       v-for="(decanato, index) in decanatos"
@@ -120,7 +120,7 @@
                       :value="decanato"
                     >{{ decanato }}</option>
                   </b-select>
-                </b-field>
+                </b-field>-->
                 <b-field label="Tipo de Usuario" horizontal>
                   <b-select
                     placeholder="Seleccione una opción"
@@ -163,7 +163,7 @@
             </section>
             <footer class="modal-card-foot">
               <button class="button is-primary" type="button" @click="modal=false">Cerrar</button>
-              <button class="button is-info" @click="edit">Registrar Usuario</button>
+             <!-- <button class="button is-info" @click="edit">Registrar Usuario</button>-->
             </footer>
           </div>
         </form>
@@ -174,6 +174,7 @@
 
 <script>
 import User from '../models/user'
+import { ValidationObserver } from 'vee-validate'
 
 export default {
   name: 'Login',
@@ -197,6 +198,9 @@ export default {
     }
   },
 
+  components: {
+    ValidationObserver
+  },
   computed: {
     loggedIn () {
       return this.$store.state.auth.status.loggedIn
@@ -218,8 +222,8 @@ export default {
     },
     handleLogin () {
       this.loading = true
-      // this.$validator.validateAll()
-      /* if (this.errors.any()) {
+      /* this.$validator.validateAll()
+      if (this.errors.any()) {
         this.loading = false
         return
       } */

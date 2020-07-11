@@ -30,7 +30,7 @@
                             <th>Descripción</th>
                             <th>Fecha</th>
                             <th>Decanato</th>
-                            <th>Acciones</th>
+                            <th v-if="rol">Acciones</th>
                           </tr>
                         </thead>
                       <tbody>
@@ -40,7 +40,7 @@
                           <td>{{acta.descripcion}}</td>
                           <td>{{acta.fecha}}</td>
                           <td>{{acta.decanato.nombre}}</td>
-                          <td>
+                          <td v-if="rol">
                               <a class="button is-small is-info mr-3" @click="editar(acta)">Editar</a>
                               <a class="button is-small is-danger mr-3" @click="deleteA(acta)">Eliminar</a>
                               <a class="button is-small is-warning mr-3" @click="download(acta.pdf.id)">Descargar PDF</a>
@@ -134,6 +134,7 @@ export default {
       customElementsForm: {
         file: null
       },
+      rol:'',
       form: {
         codigo: '',
         tipo: null,
@@ -144,7 +145,15 @@ export default {
     }
   },
   created () {
-    this.fetchActiveActas()
+    const user = JSON.parse(localStorage.getItem('user'))
+    console.log(user)
+    this.rol=user.roles[0]==='ROLE_ADMIN'
+    if(user.roles[0]==='ROLE_ADMIN'){
+      this.fetchActiveActas()
+    }else {
+      console.log(user.decanato.codigo)
+      this.fetchActasDecanato(user.decanato.codigo)
+    }
     this.fetchActiveDecanatos()
   },
   computed: {
@@ -175,7 +184,7 @@ export default {
         fileLink.click();
       });
     },
-    ...mapActions('actas', ['fetchActiveActas', 'deleteActa', 'fetchActas', 'saveActa']),
+    ...mapActions('actas', ['fetchActiveActas', 'deleteActa', 'fetchActas', 'saveActa','fetchActasDecanato']),
     ...mapActions('decanatos', ['fetchActiveDecanatos']),
 
     edit () {
